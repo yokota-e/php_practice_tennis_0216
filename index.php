@@ -3,8 +3,6 @@
 require_once __DIR__ . '/func/functions.php';
 
 
-
-
 // DBから引っ張ってくる
 //DBに接続
 try {

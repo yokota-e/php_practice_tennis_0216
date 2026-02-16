@@ -1,30 +1,29 @@
 <?php
-// TODO: ID取得とバリデーション
-$filename = 'info/info.csv';
-$fp = fopen($filename, 'r');
+// functions.phpを読み込む
+require_once __DIR__ . '/func/functions.php';
 
-$target = array();
 
 $id = $_GET['id'];
+echo $id;
 
-// $_GET['id']とidが一致するやつだけ使いたい～～
+// DBから引っ張ってくる
+//DBに接続
+try {
 
-if ($fp) {
-  while ($row = fgetcsv($fp)) {
-    if ($id === $row[0]) {
-      $target[] = $row;
-      break;
-    }
-  }
+  $db = db_connect();
+  $sql = 'SELECT * FROM info WHERE id = $id ';
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
 
-  fclose($fp);
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  echo '<pre>';
+  var_dump($result);
+  echo '</pre>';
+} catch (PDOException $e) {
+  exit("エラー:" . $e->getMessage());
 }
 
-// echo "<pre>";
-// var_dump($target);
-// echo "</pre>";
-
-// TODO: CSV読み込みと記事検索
 ?>
 <!doctype html>
 <html lang="ja">
@@ -37,7 +36,7 @@ if ($fp) {
 
 <body>
 
-  <?php include('navbar.php');  ?>
+  <!-- <?php include('navbar.php');  ?> -->
 
   <main role="main" class="container" style="padding:60px 15px 0">
     <div>
@@ -45,24 +44,12 @@ if ($fp) {
 
       <h1 class="my-5">お知らせ</h1>
       <!-- TODO: 記事詳細を表示する -->
-      <?php if (count($target) > 0): ?>
-        <article class="info">
-          <header class="info-header">
-            <h2 class="info-title"><?php echo $target[0][1] ?></h2>
-            <div class="info-data">
-              <time datetime="<?php echo $target[0][2] ?>"><?php echo $target[0][2] ?></time>
-              <p><?php echo $target[0][3] ?></p>
-            </div>
-          </header>
-          <section>
-            <p><?php echo nl2br($target[0][4]) ?></p>
-          </section>
-        </article>
 
-      <?php else: ?>
-        <p>お知らせはありません。</p>
-        <p><a href="info_add.php">お知らせ新規登録</a></p>
-      <?php endif; ?>
+
+
+
+      <p><a href="info_add.php">お知らせ新規登録</a></p>
+
 
 
 
