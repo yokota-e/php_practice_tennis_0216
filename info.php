@@ -3,9 +3,6 @@ include_once __DIR__ . "/func/functions.php";
 
 // TODO: ID取得とバリデーション
 $getId = (int)$_GET["id"];
-if ($getId === "") {
-  // header()＋exit()で戻す
-}
 
 try {
   $db = db_connect();

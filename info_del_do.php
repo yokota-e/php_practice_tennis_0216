@@ -23,7 +23,7 @@ if (!empty($_POST)) {
             $stmt->execute();
 
             // 登録が終わったので、トップへ遷移
-            // header('Location: index.php');
+            header('Location: index.php');
             exit();
         } catch (PDOException $e) {
             exit("エラー:" . $e->getMessage());
