@@ -36,16 +36,17 @@ try {
       <form action="user_add_do.php" method="post">
 
 
-        <!-- ユーザー名 -->
-        <div class="mb-3">
-          <label for="name" class="form-label">ユーザー名</label>
-          <input type="text" name="name" id="name" class="form-control" placeholder="ユーザー名">
-        </div>
-
-        <!-- パスワード -->
-        <div class="mb-3">
-          <label for="password" class="form-label">パスワード</label>
-          <input type="password" name="name" id="password" class="form-control" placeholder="パスワード">
+        <div class="row">
+          <!-- ユーザー名 -->
+          <div class="mb-3 col">
+            <label for="name" class="form-label">ユーザー名</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="ユーザー名">
+          </div>
+          <!-- パスワード -->
+          <div class="mb-3 col">
+            <label for="password" class="form-label">パスワード</label>
+            <input type="password" name="name" id="password" class="form-control" placeholder="パスワード">
+          </div>
         </div>
 
         <!-- 役割ラジオボタン -->
