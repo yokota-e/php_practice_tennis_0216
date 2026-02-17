@@ -57,7 +57,7 @@ foreach ($result as $row) {
           <!-- パスワード -->
           <div class="mb-3 col">
             <label for="password" class="form-label">パスワード</label>
-            <input type="password" name="name" id="password" class="form-control" placeholder="パスワード">
+            <input type="password" name="password" id="password" class="form-control" placeholder="パスワード">
           </div>
         </div>
 
