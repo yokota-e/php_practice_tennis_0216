@@ -7,7 +7,7 @@ if (!empty($_POST)) {
     // 必須項目入ってるか
     if (!empty($_POST['id'])) {
 
-        $id = (int)$_POST['id'];
+        $id = $_POST['id'];
         // $id = uniqid(); //データベースで主キー設定したので不要
 
 

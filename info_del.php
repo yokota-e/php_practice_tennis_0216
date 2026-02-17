@@ -7,7 +7,7 @@ try {
     $db = db_connect();
     $sql = "SELECT * FROM info WHERE id=:id";
     $stmt = $db->prepare($sql);
-    $stmt->bindParam("id", $id, PDO::PARAM_INT);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
 
     $target = $stmt->fetch(PDO::FETCH_ASSOC);
