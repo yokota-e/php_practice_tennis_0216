@@ -13,10 +13,6 @@ try {
   $stmt->execute();
 
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  echo '<pre>';
-  var_dump($result);
-  echo '</pre>';
 } catch (PDOException $e) {
   exit("エラー:" . $e->getMessage());
 }
@@ -36,7 +32,7 @@ try {
 
 <body>
 
-  <!-- <?php include('navbar.php');  ?> -->
+  <?php include('navbar.php');  ?>
 
   <main role="main" class="container" style="padding:60px 15px 0">
     <div>

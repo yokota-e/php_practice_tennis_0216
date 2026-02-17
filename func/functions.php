@@ -20,9 +20,9 @@ function db_connect()
 
 
 // var_dump()
-function debug_check_array($target)
+function debug_check_array($array)
 {
     echo "<pre>";
-    var_dump($target);
+    var_dump($array);
     echo "</pre>";
 }
