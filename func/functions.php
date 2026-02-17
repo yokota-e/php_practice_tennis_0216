@@ -16,3 +16,13 @@ function db_connect()
 
     return $db;
 }
+
+
+
+// var_dump()
+function debug_check_array($target)
+{
+    echo "<pre>";
+    var_dump($target);
+    echo "</pre>";
+}

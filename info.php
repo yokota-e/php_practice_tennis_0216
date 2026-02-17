@@ -1,29 +1,24 @@
 <?php
-// functions.phpを読み込む
-require_once __DIR__ . '/func/functions.php';
+include_once __DIR__ . "/func/functions.php";
 
-
-$id = $_GET['id'];
-echo $id;
-
-// DBから引っ張ってくる
-//DBに接続
-try {
-
-  $db = db_connect();
-  $sql = 'SELECT * FROM info WHERE id = $id ';
-  $stmt = $db->prepare($sql);
-  $stmt->execute();
-
-  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  echo '<pre>';
-  var_dump($result);
-  echo '</pre>';
-} catch (PDOException $e) {
-  exit("エラー:" . $e->getMessage());
+// TODO: ID取得とバリデーション
+$getId = (int)$_GET["id"];
+if ($getId === "") {
+  // header()＋exit()で戻す
 }
 
+try {
+  $db = db_connect();
+  $sql = "SELECT * FROM info WHERE id=:getId";
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(":getId", $getId, PDO::PARAM_INT);
+  $stmt->execute();
+
+  // 結果セットを連想配列（PDO::FETCH_ASSOC）の形で取得
+  $target = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+  exit("エラー: " . $e->getMessage());
+}
 ?>
 <!doctype html>
 <html lang="ja">
@@ -36,7 +31,7 @@ try {
 
 <body>
 
-  <!-- <?php include('navbar.php');  ?> -->
+  <?php include('navbar.php');  ?>
 
   <main role="main" class="container" style="padding:60px 15px 0">
     <div>
@@ -44,20 +39,29 @@ try {
 
       <h1 class="my-5">お知らせ</h1>
       <!-- TODO: 記事詳細を表示する -->
-
-
-
-
-      <p><a href="info_add.php">お知らせ新規登録</a></p>
-
-
-
-
-
-
-
-
+      <article class="info">
+        <header class="info-header">
+          <h2 class="info-title"><?php echo $target["title"]; ?></h2>
+          <div class="info-data">
+            <time datetime="<?php echo $target["date"]; ?>"><?php echo $target["date"]; ?></time>
+            <p class="m-0"><?php echo $target["author"]; ?></p>
+          </div>
+        </header>
+        <section class="info-body my-3">
+          <p>
+            <?php echo nl2br($target["body"], false); ?>
+          </p>
+        </section>
+      </article>
       <p><a href="./">トップページへ戻る</a></p>
+      <form action="info_edit.php" method="post">
+        <input type="hidden" name="id" value="<?php echo $target["id"]; ?>">
+        <input type="submit" value="編集" class="btn btn-info">
+      </form>
+      <form action="info_del.php" method="post">
+        <input type="hidden" name="id" value="<?php echo $target["id"]; ?>">
+        <input type="submit" value="削除" class="btn btn-danger">
+      </form>
 
       <!-- 本文ここまで -->
     </div>
