@@ -2,18 +2,30 @@
 // functions.phpを読み込む
 require_once __DIR__ . '/func/functions.php';
 
+$roles = array();
 
 // DBから引っ張ってくる
 //DBに接続
 try {
-
   $db = db_connect();
+  // SELECT
+  $sql = 'SELECT id,name FROM roles';
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
 } catch (PDOException $e) {
   exit("エラー:" . $e->getMessage());
 }
 
+// 役割配列をDBから持ってくる
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
+// 使いやすいように配列を置き換える
+foreach ($result as $row) {
+  $roles[$row['id']] = $row['name'];
+}
+// debug_check_array($result);
+// debug_check_array($roles);
+// [key => rolename]
 
 ?>
 <!doctype html>
@@ -52,16 +64,29 @@ try {
         <!-- 役割ラジオボタン -->
 
         <p class="form-label">役割</p>
+        <!-- 役割配列を使用してラジオボタンを表示 -->
+        <?php foreach ($roles as $id => $rolename): ?>
+          <div class="mb-3 form-check form-check-inline">
+            <label for="role<?php echo $id ?>" class="form-check-label"><?php echo $rolename ?></label>
+            <input type="radio" name="role" id="role<?php echo $id ?>" value="<?php echo $id ?>" class="form-check-input"
+              <?php echo $id === 2 ? 'checked' : ''; ?>>
+          </div>
+
+        <?php endforeach; ?>
+
+
+
+
         <!-- 管理者 -->
-        <div class="mb-3 form-check form-check-inline">
+        <!-- <div class="mb-3 form-check form-check-inline">
           <label for="role1" class="form-check-label">管理者</label>
           <input type="radio" name="role" id="role1" value="1" class="form-check-input">
-        </div>
+        </div> -->
         <!-- 一般 -->
-        <div class="mb-3 form-check form-check-inline">
+        <!-- <div class="mb-3 form-check form-check-inline">
           <label for="role2" class="form-check-label">一般</label>
           <input type="radio" name="role" id="role2" value="2" class="form-check-input" checked>
-        </div>
+        </div> -->
 
         <!-- btn -->
         <div class="mb-3">
