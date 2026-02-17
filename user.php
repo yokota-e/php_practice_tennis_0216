@@ -3,6 +3,7 @@
 require_once __DIR__ . '/func/functions.php';
 
 
+
 // DBから引っ張ってくる
 //DBに接続
 try {
@@ -36,6 +37,18 @@ try {
 
       <h1 class="my-5">ユーザー</h1>
       <a href="user_add.php">ユーザー新規登録</a>
+
+      <?php
+
+      // memo:追加後、追加した情報を出したい
+      // 最後に追加した人の配列
+      // 最後の人を示すkey
+      // $last_array = array_key_last($result);
+
+      ?>
+
+
+
       <p>ユーザーは登録されていません</p>
 
 

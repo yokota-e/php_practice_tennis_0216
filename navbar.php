@@ -8,6 +8,7 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item list-group-item"><a class="nav-link" href="#">アルバム</a></li>
           <li class="nav-item list-group-item"><a class="nav-link" href="#">掲示板</a></li>
+          <li class="nav-item list-group-item"><a class="nav-link" href="./user.php">ユーザー</a></li>
         </ul>
       </div>
     </nav>
