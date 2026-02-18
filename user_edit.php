@@ -1,9 +1,24 @@
 <?php
 // functions.phpを読み込む
 require_once __DIR__ . '/func/functions.php';
-$roles = get_roles_list();
 
+$id = (int)$_POST["id"];
+$roles = get_roles_list();
+try {
+  $db = db_connect();
+  $sql = "SELECT id,name,role FROM users WHERE id=:id";
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+  $stmt->execute();
+
+  $target = $stmt->fetch(PDO::FETCH_ASSOC);
+  // debug_check_array($target);
+} catch (PDOException $e) {
+  exit("エラー: " . $e->getMessage());
+}
 ?>
+
+
 <!doctype html>
 <html lang="ja">
 
@@ -19,22 +34,23 @@ $roles = get_roles_list();
 
   <main role="main" class="container" style="padding:60px 15px 0">
     <div>
-      <h1 class="my-5">ユーザー新規登録</h1>
+      <h1 class="my-5">ユーザー - 変更</h1>
       <!-- ここから「本文」-->
-      <form action="user_add_do.php" method="post">
+      <form action="user_edit_do.php" method="post">
 
 
         <div class="row">
           <!-- ユーザー名 -->
           <div class="mb-3 col">
             <label for="name" class="form-label">ユーザー名</label>
-            <input type="text" name="name" id="name" class="form-control" placeholder="ユーザー名">
+            <input type="text" name="name" id="name" class="form-control" value="<?php echo $target['name'] ?>">
           </div>
           <!-- パスワード -->
           <div class="mb-3 col">
             <label for="password" class="form-label">パスワード</label>
             <input type="password" name="password" id="password" class="form-control" placeholder="パスワード">
           </div>
+
         </div>
 
         <!-- 役割ラジオボタン -->
@@ -45,28 +61,16 @@ $roles = get_roles_list();
           <div class="mb-3 form-check form-check-inline">
             <label for="role<?php echo $id ?>" class="form-check-label"><?php echo $rolename ?></label>
             <input type="radio" name="role" id="role<?php echo $id ?>" value="<?php echo $id ?>" class="form-check-input"
-              <?php echo $id === 2 ? 'checked' : ''; ?>>
+              <?php echo $id === $target['role'] ? 'checked' : ''; ?>>
           </div>
 
         <?php endforeach; ?>
 
 
-
-
-        <!-- 管理者 -->
-        <!-- <div class="mb-3 form-check form-check-inline">
-          <label for="role1" class="form-check-label">管理者</label>
-          <input type="radio" name="role" id="role1" value="1" class="form-check-input">
-        </div> -->
-        <!-- 一般 -->
-        <!-- <div class="mb-3 form-check form-check-inline">
-          <label for="role2" class="form-check-label">一般</label>
-          <input type="radio" name="role" id="role2" value="2" class="form-check-input" checked>
-        </div> -->
-
         <!-- btn -->
         <div class="mb-3">
-          <input type="submit" value="登録する" class="btn btn-primary">
+          <input type="hidden" name="id" value="<?php echo $target['id'] ?>">
+          <input type="submit" value="変更する" class="btn btn-primary">
         </div>
 
       </form>
