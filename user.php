@@ -64,13 +64,13 @@ $roles =  get_roles_list();
               <tr>
                 <td><?php echo $menber['id'] ?></td>
                 <td><?php echo $menber['name'] ?></td>
-                <td><?php echo $menber['role'] ?></td>
+                <td><?php echo $roles[$menber['role']] ?></td>
                 <td>
                   <form action="user_edit.php" method="post">
                     <input type="hidden" name="id" value="<?php echo $menber['id'] ?>">
                     <input type="submit" value="編集" class="btn btn-primary">
                   </form>
-                  <form action="user_edit.php" method="post">
+                  <form action="user_del.php" method="post">
                     <input type="hidden" name="id" value="<?php echo $menber['id'] ?>">
                     <input type="submit" value="削除" class="btn btn-danger">
                   </form>

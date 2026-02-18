@@ -1,31 +1,7 @@
 <?php
 // functions.phpを読み込む
 require_once __DIR__ . '/func/functions.php';
-
-$roles = array();
-
-// DBから引っ張ってくる
-//DBに接続
-try {
-  $db = db_connect();
-  // SELECT
-  $sql = 'SELECT id,name FROM roles';
-  $stmt = $db->prepare($sql);
-  $stmt->execute();
-} catch (PDOException $e) {
-  exit("エラー:" . $e->getMessage());
-}
-
-// 役割配列をDBから持ってくる
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// 使いやすいように配列を置き換える
-foreach ($result as $row) {
-  $roles[$row['id']] = $row['name'];
-}
-// debug_check_array($result);
-// debug_check_array($roles);
-// [key => rolename]
+$roles = get_roles_list();
 
 ?>
 <!doctype html>
