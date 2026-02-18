@@ -30,3 +30,7 @@
 .info-data p::before {
   content: '投稿者: ';
 }
+
+.table-user tbody td:last-of-type form {
+  display: inline-block;
+}

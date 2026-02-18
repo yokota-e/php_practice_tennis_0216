@@ -9,12 +9,14 @@ require_once __DIR__ . '/func/functions.php';
 try {
 
   $db = db_connect();
+  $sql = 'SELECT id,name,role FROM users';
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
 } catch (PDOException $e) {
   exit("エラー:" . $e->getMessage());
 }
 
-
-
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!doctype html>
@@ -38,18 +40,47 @@ try {
       <h1 class="my-5">ユーザー</h1>
       <a href="user_add.php">ユーザー新規登録</a>
 
-      <?php
-
-      // memo:追加後、追加した情報を出したい
-      // 最後に追加した人の配列
-      // 最後の人を示すkey
-      // $last_array = array_key_last($result);
-
-      ?>
 
 
+      <!-- ユーザー一覧  -->
+      <?php if (count($result) == 0): ?>
+        <p>ユーザーは登録されていません</p>
 
-      <p>ユーザーは登録されていません</p>
+      <?php else: ?>
+        <table class="table table-user">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>ユーザー名</th>
+              <th>役割</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($result as $menber): ?>
+              <tr>
+                <td><?php echo $menber['id'] ?></td>
+                <td><?php echo $menber['name'] ?></td>
+                <td><?php echo $menber['role'] ?></td>
+                <td>
+                  <form action="user_edit.php" method="post">
+                    <input type="hidden" name="id" value="<?php echo $menber['id'] ?>">
+                    <input type="submit" value="編集" class="btn btn-primary">
+                  </form>
+                  <form action="user_edit.php" method="post">
+                    <input type="hidden" name="id" value="<?php echo $menber['id'] ?>">
+                    <input type="submit" value="削除" class="btn btn-danger">
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+
+      <?php endif; ?>
+
+
+
 
 
       <!-- 本文ここまで -->
