@@ -1,6 +1,7 @@
 <?php
 include_once __DIR__ . "/func/functions.php";
-
+// セッションIDがセットされていない人はログインページに飛ばす
+require_once __DIR__ . '/inc/includes-login.php';
 // TODO: ID取得とバリデーション
 $getId = (int)$_GET["id"];
 

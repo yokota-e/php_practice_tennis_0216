@@ -2,6 +2,13 @@
 // functions.phpを読み込む
 require_once __DIR__ . '/func/functions.php';
 
+session_start();
+if (isset($_SESSION['id'])) {
+  header('location: index.php');
+  exit();
+}
+
+
 
 // DBから引っ張ってくる
 //DBに接続

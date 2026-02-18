@@ -1,4 +1,6 @@
 <?php
+// セッションIDがセットされていない人はログインページに飛ばす
+require_once __DIR__ . '/inc/includes-login.php';
 // functions.phpを読み込む
 require_once __DIR__ . '/func/functions.php';
 $roles = get_roles_list();

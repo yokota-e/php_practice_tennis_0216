@@ -1,7 +1,8 @@
 <?php
+// セッションIDがセットされていない人はログインページに飛ばす
+require_once __DIR__ . '/inc/includes-login.php';
 // functions.phpを読み込む
 require_once __DIR__ . '/func/functions.php';
-
 
 // DBから引っ張ってくる
 //DBに接続
@@ -39,7 +40,13 @@ try {
       <!-- ここから「本文」-->
 
       <h1 class="my-5">お知らせ</h1>
-      <a href="info_add.php">お知らせ新規登録</a>
+      <?php if ($_SESSION['roles'] === 1): ?>
+        <h2 class="fs-4">管理者メニュー</h2>
+        <ul>
+          <li><a href="info_add.php">お知らせ新規登録</a></li>
+          <li><a href="user.php">ユーザー一覧</a></li>
+        </ul>
+      <?php endif; ?>
       <ul class="list-group my-3">
         <?php foreach ($result as $row): ?>
           <li class="list-group-item py-3">

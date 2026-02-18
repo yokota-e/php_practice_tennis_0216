@@ -1,3 +1,8 @@
+<?php
+// セッションIDがセットされていない人はログインページに飛ばす
+require_once __DIR__ . '/inc/includes-login.php';
+?>
+
 <!doctype html>
 <html lang="ja">
 

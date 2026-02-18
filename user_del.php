@@ -1,4 +1,7 @@
 <?php
+// セッションIDがセットされていない人はログインページに飛ばす
+require_once __DIR__ . '/inc/includes-login.php';
+
 include_once __DIR__ . "/func/functions.php";
 
 $id = (int)$_POST["id"];

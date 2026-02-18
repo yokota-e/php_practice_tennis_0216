@@ -1,3 +1,8 @@
+    <?php
+    // session_start();
+
+    ?>
+
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top px-3">
       <a class="navbar-brand" href="./index.php">サークルサイト</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,6 +14,12 @@
           <li class="nav-item list-group-item"><a class="nav-link" href="#">アルバム</a></li>
           <li class="nav-item list-group-item"><a class="nav-link" href="#">掲示板</a></li>
           <li class="nav-item list-group-item"><a class="nav-link" href="./user.php">ユーザー</a></li>
+          <li class="nav-item list-group-item"><a class="nav-link" href="./inc/logout.php">ログアウト</a></li>
         </ul>
       </div>
+      <?php if (isset($_SESSION['id'])):
+        $role = get_roles_list();
+      ?>
+        <p class="text-light">ログイン中：<?php echo $_SESSION['name'] ?>[<?php echo $role[$_SESSION['roles']] ?>]</p>
+      <?php endif; ?>
     </nav>
