@@ -12,11 +12,13 @@ try {
   $sql = 'SELECT id,name,role FROM users';
   $stmt = $db->prepare($sql);
   $stmt->execute();
+
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
   exit("エラー:" . $e->getMessage());
 }
 
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$roles =  get_roles_list();
 
 ?>
 <!doctype html>
@@ -58,6 +60,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
           </thead>
           <tbody>
             <?php foreach ($result as $menber): ?>
+
               <tr>
                 <td><?php echo $menber['id'] ?></td>
                 <td><?php echo $menber['name'] ?></td>
